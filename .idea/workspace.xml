@@ -2,13 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3a4b7eff-ab53-4e3d-8ff9-a708467b4956" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/neuralnet_basic.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backprop.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test_pytorch_autograd.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/tests/backprop_test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backprop.py" beforeDir="false" afterPath="$PROJECT_DIR$/backprop.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/tests/backprop_test.py" beforeDir="false" afterPath="$PROJECT_DIR$/tests/backprop_test.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -23,8 +18,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/backprop.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="631">
-                  <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+                <state relative-caret-position="437">
+                  <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
                   <folding>
                     <element signature="e#0#18#0" expanded="true" />
                   </folding>
@@ -57,8 +52,8 @@
           <file pinned="false" current-in-tab="true">
             <entry file="file://$PROJECT_DIR$/tests/backprop_test.py">
               <provider selected="true" editor-type-id="text-editor">
-                <state relative-caret-position="625">
-                  <caret line="55" selection-start-line="55" selection-end-line="55" />
+                <state relative-caret-position="361">
+                  <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
                   <folding>
                     <element signature="e#0#15#0" expanded="true" />
                   </folding>
@@ -77,8 +72,8 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/test_pytorch_autograd.py" />
-        <option value="$PROJECT_DIR$/backprop.py" />
         <option value="$PROJECT_DIR$/tests/backprop.py" />
+        <option value="$PROJECT_DIR$/backprop.py" />
         <option value="$PROJECT_DIR$/tests/backprop_test.py" />
       </list>
     </option>
@@ -210,6 +205,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="67" y="863" width="2493" height="1415" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.093522266" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -268,8 +264,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/backprop.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="631">
-          <caret line="39" lean-forward="true" selection-start-line="39" selection-end-line="39" />
+        <state relative-caret-position="437">
+          <caret line="36" column="46" selection-start-line="36" selection-start-column="46" selection-end-line="36" selection-end-column="46" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>
@@ -278,8 +274,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/tests/backprop_test.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="55" selection-start-line="55" selection-end-line="55" />
+        <state relative-caret-position="361">
+          <caret line="50" column="24" selection-start-line="50" selection-start-column="24" selection-end-line="50" selection-end-column="24" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

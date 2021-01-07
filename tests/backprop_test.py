@@ -19,7 +19,7 @@ class TestBackProp(unittest.TestCase):
         initial_bias = np.ones(num_hidden_layer)
 
         linear = LinearLayer(num_input_data_feature, num_hidden_layer, initial_weights=initial_weights,
-                             init_bias=initial_bias, bias=False)
+                             initial_bias=initial_bias, bias_exist=False)
         output = linear.forward(data)
 
         with torch.no_grad():
@@ -33,9 +33,11 @@ class TestBackProp(unittest.TestCase):
             self.assertTrue(np.alltrue(output - output_torch.numpy() < epsilon))
 
     def test_linear_layer_back_prop(self):
+        epsilon = 1e-4
         num_input_feature = 3
         num_hidden_feature = 4
         data = np.random.random((1, 3))
+
         data = np.array(data).astype(np.float32)
         data_torch = torch.from_numpy(data)
 
@@ -52,7 +54,23 @@ class TestBackProp(unittest.TestCase):
         print('output', output)
         print('grad', data_torch.grad)
         print(hidden.grad)
-        print(torch_linear.weight.grad)
+        torch_grad = torch_linear.weight.grad.data
+
+        print('torch tensor!', torch_linear.weight.grad)
+        print('torch weight grad!', torch_grad.numpy())
+
+        initial_weights = torch_linear.weight.detach().numpy().transpose()
+        initial_bias = torch_linear.bias.detach().numpy()
+
+        linearlayer = LinearLayer(num_input_feature, num_hidden_feature, initial_weights=initial_weights,
+                                  initial_bias=initial_bias)
+        output = linearlayer.forward(data)
+        linearlayer.backward()
+        # print(linearlayer.backward())
+        print('custom layer weight grad!',linearlayer.grad)
+        diff = linearlayer.grad - torch_grad.numpy()
+        print('diff:', diff)
+        self.assertTrue( np.alltrue(diff < epsilon))
 
 
 if __name__ == '__main__':
