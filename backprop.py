@@ -42,13 +42,45 @@ class LinearLayer:
         else:
             return np.dot(input, self.weights)
 
-    def backward(self):
+    def backward(self, gradient_from_forward=None):
+        if gradient_from_forward is None:
+            gradient_from_forward = np.ones((1, self.shape[-1]))  # (1, out_featues)
+        else:
+            print('shape;', gradient_from_forward.shape, self.shape)
+            assert gradient_from_forward.shape[0] == 1
+            assert gradient_from_forward.shape[1] == self.shape[-1]
+
         self.grad = np.zeros(self.shape)
         if self.bias_exist:
             self.grad_bias = np.zeros(self.bias.shape)
 
-        # batch_size = self.input.shape[0]
-        self.grad = np.mean(self.input, axis=0)
+        current_gradient = np.reshape(np.mean(self.input, axis=0), (1, -1))  # (1, in_features)
+
+        # shape: (in_features, out_features)
+
+        self.grad = np.dot(current_gradient.transpose(), gradient_from_forward)
+
+    def step(self):
+        return
+
+
+class SigmoidLayer():
+    def __init__(self, input_shape):
+        self.shape = input_shape[:1]
+
+    def forward(self, input):
+        self.input = input
+        return 1 / (1 + np.exp(-input))
+
+    def backward(self, gradient_from_forward=None):
+        if gradient_from_forward is None:
+            gradient_from_forward = 1
+        else:
+            pass
+
+        current_gradient = self.forward(self.input) * (1 - self.forward(self.input))
+        self.grad = gradient_from_forward * current_gradient
+        return self.grad
 
     def step(self):
         return
