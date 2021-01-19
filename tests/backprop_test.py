@@ -62,7 +62,6 @@ class TestBackProp(unittest.TestCase):
         initial_weights = torch_linear.weight.detach().numpy().transpose()
         initial_bias = torch_linear.bias.detach().numpy()
 
-
         linearlayer = LinearLayer(num_input_feature, num_hidden_feature, initial_weights=initial_weights,
                                   initial_bias=initial_bias)
         output = linearlayer.forward(data)
@@ -119,11 +118,76 @@ class TestBackProp(unittest.TestCase):
         print(linearlayer.grad.transpose())
 
     def test_linear_batch_gradient(self):
+        # parameters
+        num_data = 10000
         num_input_feature = 3
-        num_hidden_feature = 10
-        model = torch.nn.Sequential([])
+        num_out_dimension = 4
+        lr = 1.0
 
-        optimizer = optim.SGD()
+        x = torch.randn(num_data, num_input_feature)
+        y = torch.randn(num_data, num_out_dimension)
+
+        # model
+        model = torch.nn.Sequential(
+            Linear(num_input_feature, num_out_dimension),
+            torch.nn.Sigmoid()
+        )
+
+        # loss and optimizer
+        print('[linear weight]\n', model[0].weight)
+        loss_fn = torch.nn.MSELoss(reduction='mean')
+        optimizer = torch.optim.SGD(model.parameters(), lr=lr)
+
+        y_pred = model(x)
+
+        loss = loss_fn(y_pred, y)
+        print('[torch loss]', loss)
+        loss.backward()
+        print('[linear grad]\n', model[0].weight.grad.data)
+        print('[y_pred grad]', y_pred.grad)
+
+        # optimizer.step()
+        print('[linear weight after]\n', model[0].weight)
+
+        initial_weights = model[0].weight.detach().numpy().transpose()
+        initial_bias = model[0].bias.detach().numpy()
+
+
+        x = x.numpy()
+
+        # layer initialization
+        linearlayer_custom = LinearLayer(num_input_feature, num_out_dimension,
+                                  initial_weights=initial_weights,
+                                  initial_bias=initial_bias)
+
+        sigmoid_custom = SigmoidLayer(x.shape)
+
+        # feed forward
+        hidden = linearlayer_custom.forward(x)
+        y_pred_custom = sigmoid_custom.forward(hidden)
+        y_numpy = y.numpy()
+        print(y_pred_custom.shape)
+        print(y_numpy.shape)
+        loss = np.mean(np.power(y.numpy() - y_pred_custom, 2))
+        print('custom loss', loss)
+        gradient_from_loss = np.mean(2 * (y_pred_custom - y_numpy),axis=0)
+
+        print('gradient_from_loss', gradient_from_loss.shape, gradient_from_loss)
+
+        grad1 = sigmoid_custom.backward(gradient_from_loss)
+        grad1_mean = np.sum(grad1, axis=0)
+        grad1_mean = np.reshape(grad1_mean, (1, -1))
+
+        print(grad1_mean.shape)
+
+        print('sigmoid grad1 mean', grad1_mean)
+
+        linearlayer_custom.backward(grad1_mean)
+        print('custom gradient')
+        print(linearlayer_custom.grad.transpose())
+
+        # custom_model =
+
 
 if __name__ == '__main__':
     unittest.main()

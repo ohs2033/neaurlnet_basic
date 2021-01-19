@@ -60,9 +60,6 @@ class LinearLayer:
 
         self.grad = np.dot(current_gradient.transpose(), gradient_from_forward)
 
-    def step(self):
-        return
-
 
 class SigmoidLayer():
     def __init__(self, input_shape):
@@ -73,6 +70,7 @@ class SigmoidLayer():
         return 1 / (1 + np.exp(-input))
 
     def backward(self, gradient_from_forward=None):
+        print('backward sigmoid..', gradient_from_forward.shape, self.shape)
         if gradient_from_forward is None:
             gradient_from_forward = 1
         else:
@@ -82,8 +80,14 @@ class SigmoidLayer():
         self.grad = gradient_from_forward * current_gradient
         return self.grad
 
-    def step(self):
-        return
+
+def MSELoss(y, y_pred):
+    N, _, _ = y.shape
+    N_pred, _, _, = y_pred.shape
+
+    assert N == N_pred
+
+    return np.mean(y - y_pred, axis=0)
 
 
 if __name__ == "__main__":
