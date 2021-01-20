@@ -46,7 +46,6 @@ class LinearLayer:
         if gradient_from_forward is None:
             gradient_from_forward = np.ones((1, self.shape[-1]))  # (1, out_featues)
         else:
-            print('shape;', gradient_from_forward.shape, self.shape)
             assert gradient_from_forward.shape[0] == 1
             assert gradient_from_forward.shape[1] == self.shape[-1]
 
@@ -70,13 +69,16 @@ class SigmoidLayer():
         return 1 / (1 + np.exp(-input))
 
     def backward(self, gradient_from_forward=None):
-        print('backward sigmoid..', gradient_from_forward.shape, self.shape)
+        if gradient_from_forward is not None:
+            print('backward sigmoid..', gradient_from_forward.shape, self.shape)
+
         if gradient_from_forward is None:
             gradient_from_forward = 1
         else:
             pass
 
         current_gradient = self.forward(self.input) * (1 - self.forward(self.input))
+        print('sigmoid backward.. current gradient shape', current_gradient.shape)
         self.grad = gradient_from_forward * current_gradient
         return self.grad
 
