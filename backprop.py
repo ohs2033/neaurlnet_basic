@@ -13,6 +13,7 @@ def xavier_uniform(size):
 
 
 class LinearLayer:
+
     def __init__(self, in_features: int, out_features: int,
                  bias_exist: bool = True,
                  initial_weights: np.array = None,
@@ -46,18 +47,17 @@ class LinearLayer:
         if gradient_from_forward is None:
             gradient_from_forward = np.ones((1, self.shape[-1]))  # (1, out_featues)
         else:
-            assert gradient_from_forward.shape[0] == 1
-            assert gradient_from_forward.shape[1] == self.shape[-1]
+            print('gradient_from_forward shape:', gradient_from_forward.shape, self.input.shape)
+            assert gradient_from_forward.shape[1] == self.shape[1], \
+                f'{gradient_from_forward.shape[1]}!={self.shape[1]}'
 
         self.grad = np.zeros(self.shape)
         if self.bias_exist:
             self.grad_bias = np.zeros(self.bias.shape)
 
-        current_gradient = np.reshape(np.mean(self.input, axis=0), (1, -1))  # (1, in_features)
-
         # shape: (in_features, out_features)
-
-        self.grad = np.dot(current_gradient.transpose(), gradient_from_forward)
+        self.grad = np.dot(self.input.transpose(), gradient_from_forward)
+        return self.grad
 
 
 class SigmoidLayer():
@@ -99,7 +99,10 @@ if __name__ == "__main__":
     initial_bias = np.ones(4)
 
     print(initial_weights.shape)
-    linear = LinearLayer(2, 4, initial_weights=initial_weights, initial_bias=initial_bias, bias_exist=False)
+    linear = LinearLayer(2, 4,
+                         initial_weights=initial_weights,
+                         initial_bias=initial_bias,
+                         bias_exist=False)
 
     print(linear.weights)
     output = linear.forward(data)
