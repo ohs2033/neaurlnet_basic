@@ -82,6 +82,15 @@ class SigmoidLayer():
         self.grad = gradient_from_forward * current_gradient
         return self.grad
 
+class Convolutionlayer():
+    def __init__(self, input_channel, output_channel, kernel_size):
+        self.input_channel = input_channel
+        self.output_channel = output_channel
+        self.kernel_size = kernel_size
+
+    def forward(self, input):
+        self.
+
 
 def MSELoss(y, y_pred):
     N, _, _ = y.shape
